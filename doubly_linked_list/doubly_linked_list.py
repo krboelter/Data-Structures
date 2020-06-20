@@ -48,19 +48,61 @@ class DoublyLinkedList:
     as the new head of the list. Don't forget to handle 
     the old head node's previous pointer accordingly."""
     def add_to_head(self, value):
-        pass
+        if self.length == 0:
+            self.head = ListNode(value)
+            self.head.prev = None
+            self.head.next = None
+            self.tail = self.head
+            self.legnth += 1
+        if self.length == 1:
+            old_node = self.head
+            self.head = ListNode(value)
+            self.head.next = old_node
+            self.head.pref = None
+        old_node = self.head
+        self.head = ListNode(value)
+        self.tail = old_node
+        self.head.prev = None
+        self.head.next = old_node
+        old_node.next = self.head
+        self.length += 1
+
 
     """Removes the List's current head node, making the
     current head's next node the new head of the List.
     Returns the value of the removed Node."""
     def remove_from_head(self):
-        pass
+        if self.length == 1:
+            self.head = None
+            self.tail = None
+            self.length -= 1
+        old_node = self.head
+        self.head = old_node.prev
+        self.length -= 1
 
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
     the old tail node's next pointer accordingly."""
     def add_to_tail(self, value):
-        pass
+        if self.length == 0:
+            prev_node = self.tail
+            self.tail = ListNode(value)
+            self.tail.next = None
+            self.tail.prev = None
+            self.head = self.tail
+            self.length += 1
+        if self.length == 1:
+            prev_node = self.tail
+            self.tail = ListNode(value)
+            self.tail.next = prev_node
+            self.tail.prev = None
+            self.length += 1
+        prev_node = self.tail
+        self.tail = ListNode(value)
+        self.tail.next = prev_node
+        self.tail.prev = None
+        self.length += 1
+
 
     """Removes the List's current tail node, making the 
     current tail's previous node the new tail of the List.

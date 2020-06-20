@@ -90,18 +90,18 @@ class Queue:
             self.len -= 1
             return tail_value 
 
-    def contains(self, value):
-        if self.head is None:
-            return False
-        # Loop through each node, until we see the value, or we cannot go further
-        current_node = self.head
+    # def contains(self, value):
+    #     if self.head is None:
+    #         return False
+    #     # Loop through each node, until we see the value, or we cannot go further
+    #     current_node = self.head
 
-        while current_node is not None:
-        # check if this is the node we are looking for
-            if current_node.value == value:
-                return True
-            # otherwise, go to the next node
-            current_node = current_node.next_node
-            return False 
+    #     while current_node is not None:
+    #     # check if this is the node we are looking for
+    #         if current_node.value == value:
+    #             return True
+    #         # otherwise, go to the next node
+    #         current_node = current_node.next_node
+    #         return False 
 
 
