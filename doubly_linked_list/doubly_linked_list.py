@@ -55,16 +55,14 @@ class DoublyLinkedList:
             self.tail = self.head
             self.legnth += 1
         if self.length == 1:
-            old_node = self.head
-            self.head = ListNode(value)
-            self.head.next = old_node
-            self.head.pref = None
-        old_node = self.head
-        self.head = ListNode(value)
-        self.tail = old_node
-        self.head.prev = None
-        self.head.next = old_node
-        old_node.next = self.head
+            head = self.head
+            new = ListNode(value)
+            self.tail = head
+            self.tail.prev = new
+            self.tail.insert_before(new)
+            self.length += 1
+        new = ListNode(value)
+        self.head.insert_before(new)
         self.length += 1
 
 
@@ -75,8 +73,7 @@ class DoublyLinkedList:
         if self.length == 0:
             return None
         if self.length == 1:
-            self.head = None
-            self.tail = None
+            self.head.delete()
             self.length -= 1
         old_node = self.head
         self.head = old_node.next
@@ -87,22 +84,14 @@ class DoublyLinkedList:
     the old tail node's next pointer accordingly."""
     def add_to_tail(self, value):
         if self.length == 0:
-            prev_node = self.tail
             self.tail = ListNode(value)
             self.tail.prev = None
             self.tail.next = None
             self.head = self.tail
             self.length += 1
-        if self.length == 1:
-            prev_node = self.tail
-            self.tail = ListNode(value)
-            self.tail.prev = prev_node
-            self.tail.next = None
-            self.length += 1
-        prev_node = self.tail
-        self.tail = ListNode(value)
-        self.tail.prev = prev_node
-        self.tail.next = None
+        old = self.tail
+        self.tail.insert_after(value)
+        self.tail.prev = self.tail
         self.length += 1
 
 
@@ -112,25 +101,62 @@ class DoublyLinkedList:
     def remove_from_tail(self):
         if self.length == 0:
             return None
-        if self.length = 1:
+        if self.length == 1:
             self.tail = None
             self.head = None
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
     def move_to_front(self, node):
-        pass
+        prev = node.prev
+        next = node.next
+        prev.next = next
+        next.prev = prev
+        self.head.insert_before(node)
+        node.prev = None
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
     def move_to_end(self, node):
-        pass
+        prev = node.prev
+        next = node.next
+        prev.next = next
+        next.prev = prev
+        self.tail.insert_after(node)
+        node.next = None
 
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
     def delete(self, node):
-        pass
+        if node == self.head:
+            print(self.head.prev, "HEAD PREV", self.head.next, "HEAD NEXT")
+            if self.head.prev:
+                self.head = self.head.prev
+                self.head.delete()
+            self.head.delete()
+            self.length -= 1
+            print("DELETED AS HEAD")
+        if  node == self.tail:
+            tail = self.tail
+            self.tail = tail.prev
+            tail.delete()
+            self.length -= 1
+            print("DELETED AS TAIL")
+        current_node = node
+        prev = current_node.prev
+        next = current_node.next
+        current_node.next = prev
+        current_node.prev = next
+        current_node.delete()
+        self.length -= 1
+        print("DELETED AS OTHER")
         
     """Returns the highest value currently in the list"""
     def get_max(self):
-        pass
+        maximum = 0
+        didgit = self.head
+        while didgit.next != None:
+            if didgit < didgit.next:
+                maximum = didgit
+            else:
+                maximum = didgit.next
