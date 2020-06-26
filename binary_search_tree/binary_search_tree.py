@@ -25,7 +25,7 @@ class BSTNode:
             else:
                 self.left = new_node
         # go to right
-        elif value > self.value:
+        elif value >= self.value:
             if self.right is not None:
                 self.right.insert(value)
             else:
@@ -71,17 +71,43 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        if self.left is not None:
+            self.left.in_order_print(node)
+        
+        print(self.value)
+
+        if self.right is not None:
+            self.right.in_order_print(node)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        queue = []
+        queue.append(node)
+        # print(node, "NODE")
+
+        while len(queue) > 0:
+            current_node = queue.pop(0)
+            print(current_node.value)
+            if current_node.left is not None:
+                queue.append(current_node.left)
+            if current_node.right is not None:
+                queue.append(current_node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        stack = []
+        stack.append(node)
+
+        while len(stack) > 0:
+            current_node = stack.pop()
+            print(current_node.value)
+            if current_node.left is not None:
+                stack.append(current_node.left)
+            if current_node.right is not None:
+                stack.append(current_node.right)
+            
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -93,3 +119,5 @@ class BSTNode:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+
+
